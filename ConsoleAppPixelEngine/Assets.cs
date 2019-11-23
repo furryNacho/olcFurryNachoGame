@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleAppPixelEngine.Items;
 using PixelEngine;
 
 namespace ConsoleAppPixelEngine
@@ -31,6 +32,35 @@ namespace ConsoleAppPixelEngine
         }
 
         private Dictionary<string, Sprite> m_mapSprites { get; set; } = new Dictionary<string, Sprite>();
+        private Dictionary<string, cMap> m_mapMaps { get; set; } = new Dictionary<string, cMap>();
+
+        private Dictionary<string, Item> m_mapItems { get; set; } = new Dictionary<string, Item>();
+
+        public Item GetItem(string name)
+        {
+            Item item;
+            if (m_mapItems.TryGetValue(name, out item))
+            {
+                return item;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public cMap GetMap(string name)
+        {
+            cMap cMap;
+            if (m_mapMaps.TryGetValue(name, out cMap))
+            {
+                return cMap;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public Sprite GetSprite(string name)
         {
@@ -45,27 +75,49 @@ namespace ConsoleAppPixelEngine
             }
         }
 
+        public void LoadItems()
+        {
+            var hart = new cItem_Health();
+            m_mapItems.Add("health", hart);
+            var boost = new cItem_HealthBoost();
+            m_mapItems.Add("healthboost", boost);
+
+            var sword = new cWeapon_Sword();
+            m_mapItems.Add("sword", sword);
+        }
+
+        public void LoadMaps()
+        {
+            var lvl1 = new cMap_Village1();
+            m_mapMaps.Add("lvl1", lvl1);
+            var lvl2 = new cMap_Home1();
+            m_mapMaps.Add("lvl2", lvl2);
+        }
 
         public void LoadSprites()
         {
 
 
-            Load("forest", RootPath(@"Properties\testtilesheet.bmp"));
-            Load("font", RootPath(@"Properties\Retro.png"));
-            Load("player", RootPath(@"Properties\SpriteScarlet.bmp"));
-            Load("skally", RootPath(@"Properties\skally.png"));
+            LoadS("forest", RootPath(@"Properties\testtilesheet.bmp"));
+            LoadS("font", RootPath(@"Properties\Retro.png"));
+            LoadS("player", RootPath(@"Properties\SpriteScarlet.bmp"));
+            LoadS("skally", RootPath(@"Properties\skally.png"));
 
+            LoadS("sword", RootPath(@"Properties\sword.png"));
+            LoadS("health", RootPath(@"Properties\health.png"));
+            LoadS("healthboost", RootPath(@"Properties\healthboost.png"));
             //Load("forest", @"C:\Users\kim_k\source\repos\ConsoleAppPixelEngine\ConsoleAppPixelEngine\Properties\testtilesheet.bmp");
             //Load("font", @"C:\Users\kim_k\source\repos\ConsoleAppPixelEngine\ConsoleAppPixelEngine\Properties\Retro.png");
             //Load("player", @"C:\Users\kim_k\source\repos\ConsoleAppPixelEngine\ConsoleAppPixelEngine\Properties\SpriteScarlet.bmp");
             //Load("skally", @"C:\Users\kim_k\source\repos\ConsoleAppPixelEngine\ConsoleAppPixelEngine\Properties\skally.png");
         }
-
-        private void Load(string sName, string sFileName)
+        private void LoadS(string sName, string sFileName)
         {
             var sprite = Sprite.Load(sFileName);
             m_mapSprites.Add(sName, sprite);
         }
+
+      
 
 
         public string RootPath(string Path = "")

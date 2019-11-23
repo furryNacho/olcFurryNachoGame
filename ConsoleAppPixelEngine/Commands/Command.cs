@@ -17,10 +17,13 @@ namespace ConsoleAppPixelEngine.Commands
 
         public bool Completed { get; set; }
         public bool Started { get; set; }
-
+        public Quest.Quest m_quest { get; set; }
         public virtual void Start() { }
         public virtual void Update(float elapsedTime) { }
 
+        public virtual void AddQuest(Quest.Quest quest)
+        {
+        }
 
         public static OneLoneCoder_NachoGame g_engine { get; set; }
 
@@ -95,8 +98,8 @@ namespace ConsoleAppPixelEngine.Commands
 
         public override void Start()
         {
-            StartPosX = myObject.pX;
-            StartPosY = myObject.pY;
+            StartPosX = myObject.px;
+            StartPosY = myObject.py;
         }
         public override void Update(float elapsedTime)
         {
@@ -109,18 +112,18 @@ namespace ConsoleAppPixelEngine.Commands
             }
 
             // speed = distance over time
-            myObject.pX = (TargetPosX - StartPosX) * t + StartPosX;
-            myObject.pY = (TargetPosY - StartPosY) * t + StartPosY;
-            myObject.vX = (TargetPosX - StartPosX) / Duration;
-            myObject.vY = (TargetPosY - StartPosY) / Duration;
+            myObject.px = (TargetPosX - StartPosX) * t + StartPosX;
+            myObject.py = (TargetPosY - StartPosY) * t + StartPosY;
+            myObject.vx = (TargetPosX - StartPosX) / Duration;
+            myObject.vy = (TargetPosY - StartPosY) / Duration;
 
             if (TimeSoFar >= Duration)
             {
                 //Object has reached destination, sp stop
-                myObject.pX = TargetPosX;
-                myObject.pY = TargetPosY;
-                myObject.vX = 0.0f;
-                myObject.vY = 0.0f;
+                myObject.px = TargetPosX;
+                myObject.py = TargetPosY;
+                myObject.vx = 0.0f;
+                myObject.vy = 0.0f;
                 Completed = true;
             }
 
@@ -162,5 +165,43 @@ namespace ConsoleAppPixelEngine.Commands
 
     }
 
+    public class CommandChangeMap : Command
+    {
+        public CommandChangeMap(string mapName, float mapPosX, float mapPosY)
+        {
+            m_sMapName = mapName;
+            m_fMapPosX = mapPosX;
+            m_fMapPosY = mapPosY;
+        }
+
+        public override void Start()
+        {
+            g_engine.ChangeMap(m_sMapName, m_fMapPosX, m_fMapPosY);
+            Completed = true;
+        }
+
+        public string m_sMapName { get; set; }
+        public float m_fMapPosX { get; set; }
+        public float m_fMapPosY { get; set; }
+    }
+
+
+
+    // Någonstans i slutet på 3.. hängde inte med på vad han gjorde
+
+    public class CommandAddQuest:Command
+    {
+        public CommandAddQuest(Quest.Quest quest)
+        {
+            m_quest = quest;
+        }
+
+        private  Quest.Quest m_quest { get; set; }
+        public override void Start()
+        {
+            g_engine.AddQuest(m_quest);
+            Completed = true;
+        }
+    }
 
 }

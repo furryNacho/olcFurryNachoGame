@@ -67,10 +67,16 @@
     <Compile Include="cMap.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Hero.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Objects\cDynamic_Projectile.cs" />
     <Compile Include="Objects\Creature.cs" />
     <Compile Include="Objects\DynamicObj.cs" />
+    <Compile Include="Objects\cDynamic_Item.cs" />
+    <Compile Include="Objects\Teleport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quest\Quest.cs" />
+    <Compile Include="Util\Enum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -102,7 +108,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Properties\health.png" />
+    <Content Include="Properties\healthboost.png" />
     <Content Include="Properties\mapoutput.txt" />
+    <Content Include="Properties\mapoutput1.txt" />
     <Content Include="Properties\Retro.png" />
     <Content Include="Properties\runRight.bmp" />
     <Content Include="Properties\sankaSkepp.bmp" />
@@ -111,6 +120,7 @@
     <Content Include="Properties\SpriteScarlet.bmp" />
     <Content Include="Properties\testtilesheet.bmp" />
     <Content Include="Properties\village1.lvl.txt" />
+    <Content Include="Properties\sword.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
